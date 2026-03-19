@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build MCTool",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-Wall", "-Wextra", "-g3",
+                "-I", "d:/table/mctool/include",
+                "d:/table/mctool/src/*.cpp",      // 编译所有源文件
+                "-o", "d:/table/mctool/bin/MCTool.exe",
+                "-lws2_32", "-lgdiplus", "-lshell32"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

@@ -2,6 +2,21 @@
 #include <string>
 #include <vector>
 
+void PopupWindow::Show() {
+    // 原有的显示代码...
+    SetWindowPos(...);
+
+    // 临时测试：手动构造一个假状态
+    ServerStatus testStatus;
+    testStatus.online = true;
+    testStatus.motd = "Test Server";
+    testStatus.players = 10;
+    testStatus.maxPlayers = 20;
+    testStatus.version = "1.19.2";
+    testStatus.latency = 45;
+    UpdateServerStatus(testStatus);
+}
+
 // 辅助函数：UTF-8 转宽字符串
 static std::wstring UTF8ToWide(const std::string& utf8) {
     if (utf8.empty()) return std::wstring();
