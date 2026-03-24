@@ -1,5 +1,5 @@
 {
-    "current_server": 1,
+    "current_server": 0,
     "news": {
         "url": "https://www.minecraft.net/zh-hans/articles"
     },
@@ -37,7 +37,7 @@
     ],
     "ui": {
         "edge_threshold": 10,
-        "popup_height": 300,
+        "popup_height": 320,
         "popup_width": 400
     }
 }

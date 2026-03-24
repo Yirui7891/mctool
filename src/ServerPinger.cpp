@@ -187,6 +187,31 @@ static bool PingModern(SOCKET sock, const std::string& host, uint16_t port, Serv
             status.motd = j["description"].get<std::string>();
         }
 
+        // ----- 新增：提取 favicon -----
+        if (j.contains("favicon") && j["favicon"].is_string()) {
+            status.favicon_base64 = j["favicon"].get<std::string>();
+            DEBUG_LOG("favicon 数据长度: " << status.favicon_base64.size());
+        } else {
+            status.favicon_base64.clear();
+        }
+
+        // ----- 新增：提取 modinfo -----
+        if (j.contains("modinfo") && j["modinfo"].is_object()) {
+            const auto& modinfo = j["modinfo"];
+            if (modinfo.contains("type") && modinfo["type"] == "FML" &&
+                modinfo.contains("modList") && modinfo["modList"].is_array()) {
+                for (const auto& mod : modinfo["modList"]) {
+                    if (mod.is_object() && mod.contains("modid") && mod.contains("version")) {
+                        ServerMod sm;
+                        sm.modid = mod["modid"].get<std::string>();
+                        sm.version = mod["version"].get<std::string>();
+                        status.mods.push_back(sm);
+                    }
+                }
+                DEBUG_LOG("解析到 " << status.mods.size() << " 个模组");
+            }
+        }
+
         DEBUG_LOG("现代协议解析成功，版本=" << status.version << " 玩家=" << status.players << "/" << status.maxPlayers);
         return true;
     }
